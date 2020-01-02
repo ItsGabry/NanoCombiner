@@ -1,9 +1,6 @@
 <?php
 
 
-<?php
-
-
 namespace ItsGabry\NanoCombinerGUI;
 
 use onebone\economyapi\EconomyAPI;
