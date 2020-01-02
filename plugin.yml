@@ -1,0 +1,15 @@
+name: NanoCombinerGUI
+main: ItsGabry\NanoCombinerGUI\Main
+api: 3.0.0
+version: 1.0
+author: ItsGabry
+commands:
+  combiner:
+    description: Open the CombinerGUI
+    usage: "/combiner"
+    aliases: [comb, combin]
+    permission: combiner.command
+  permissions:
+    combiner.command:
+    description: "Allows players to use the CombinerGUI"
+    default: true
