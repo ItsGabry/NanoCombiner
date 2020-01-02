@@ -85,26 +85,31 @@ class Main extends PluginBase implements Listener {
                                         $player->getInventory()->addItem($item1);
                                         $player->getInventory()->addItem($item2);
                                         $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                        return false;
                                     } elseif ($enchantment->getId() == 313 and (in_array($enchantment1->getId(), $IncompatibleGrappling)) or ($enchantment1->getId() == 313 and (in_array($enchantment->getId(), $IncompatibleGrappling)))) {
                                         $player->removeWindow($action->getInventory());
                                         $player->getInventory()->addItem($item1);
                                         $player->getInventory()->addItem($item2);
                                         $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                        return false;
                                     } elseif ($enchantment->getId() == 415 and (in_array($enchantment1->getId(), $IncompatibleGrow)) or ($enchantment1->getId() == 415 and (in_array($enchantment->getId(), $IncompatibleGrow)))) {
                                         $player->removeWindow($action->getInventory());
                                         $player->getInventory()->addItem($item1);
                                         $player->getInventory()->addItem($item2);
                                         $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                        return false;
                                     } elseif ($enchantment->getId() == 316 and (in_array($enchantment1->getId(), $IncompatibleHoming)) or ($enchantment1->getId() == 316 and (in_array($enchantment->getId(), $IncompatibleHoming)))) {
                                         $player->removeWindow($action->getInventory());
                                         $player->getInventory()->addItem($item1);
                                         $player->getInventory()->addItem($item2);
                                         $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                        return false;
                                     } elseif ($enchantment->getId() == 314 and (in_array($enchantment1->getId(), $IncompatiblePorkified)) or ($enchantment1->getId() == 314 and (in_array($enchantment->getId(), $IncompatiblePorkified)))) {
                                         $player->removeWindow($action->getInventory());
                                         $player->getInventory()->addItem($item1);
                                         $player->getInventory()->addItem($item2);
                                         $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                        return false;
                                     }
                                 }
                             }
@@ -122,15 +127,16 @@ class Main extends PluginBase implements Listener {
                                                             $level2 = $c->getLevel();
                                                             $level = $level1 + $level2;
                                                             $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $level));
-                                                            $this->EconomyAPEEE()->reduceMoney($player, $this->getConfig()->get("Cost"));
-                                                            $player->removeWindow($action->getInventory());
-                                                            $player->getInventory()->addItem($item);
-                                                            $player->sendMessage(TextFormat::GREEN . "Hai combinato correttamente gli enchant per" . " " . $this->getConfig()->get("Cost") . " " . "monete");
                                                         }
                                                     }
                                                 }
+                                            $this->EconomyAPEEE()->reduceMoney($player, $this->getConfig()->get("Cost"));
+                                            $player->removeWindow($action->getInventory());
+                                            $player->getInventory()->addItem($item);
+                                            $player->sendMessage(TextFormat::GREEN . "Hai combinato correttamente gli enchant per" . " " . $this->getConfig()->get("Cost") . " " . "monete");
 
-                                             }else{
+
+                                        }else{
                                             $player->removeWindow($action->getInventory());
                                             $player->sendMessage(TextFormat::RED . "Entrambi gli item devono essere uguali");
                                             $player->getInventory()->addItem($item1);
@@ -203,4 +209,5 @@ class Main extends PluginBase implements Listener {
 
 
 }
+
 
