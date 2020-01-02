@@ -9,7 +9,6 @@ use muqsit\invmenu\InvMenuHandler;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerItemHeldEvent;
 use pocketmine\inventory\transaction\action\SlotChangeAction;
 use pocketmine\item\enchantment\Enchantment;
 use pocketmine\item\enchantment\EnchantmentInstance;
@@ -29,11 +28,6 @@ class Main extends PluginBase implements Listener {
         $this->getServer()->getPluginManager()->getPlugin("EconomyAPI");
         if (!InvMenuHandler::isRegistered()) {
             InvMenuHandler::register($this);
-        }
-    }
-    public function vardump(PlayerItemHeldEvent $event) :void {
-        foreach($event->getItem()->getEnchantments() as $e) {
-            var_dump($e->getId());
         }
     }
     public function onCommand(CommandSender $sender, Command $command, string $label, array $args): bool {
@@ -81,78 +75,68 @@ class Main extends PluginBase implements Listener {
                         $IncompatibleHoming = [311,314,301]; //316
                         $IncompatiblePorkified = [301]; //314
                         if ($action->getSlot() == 26) {
+                            $getEnchantments = $action->getInventory()->getItem(10)->getEnchantments();
+                            $getEnchantments1 = $action->getInventory()->getItem(16)->getEnchantments();
+                            $player->getLevel()->broadcastLevelEvent($player, LevelEventPacket::EVENT_CAULDRON_CLEAN_BANNER, 100);
+                            foreach ($getEnchantments as $enchantment) {
+                                foreach ($getEnchantments1 as $enchantment1) {
+                                    if ($enchantment->getId() == 311 and (in_array($enchantment1->getId(), $IncompatibleBlaze)) or ($enchantment1->getId() == 311 and (in_array($enchantment->getId(), $IncompatibleBlaze)))) {
+                                        $player->removeWindow($action->getInventory());
+                                        $player->getInventory()->addItem($item1);
+                                        $player->getInventory()->addItem($item2);
+                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                    } elseif ($enchantment->getId() == 313 and (in_array($enchantment1->getId(), $IncompatibleGrappling)) or ($enchantment1->getId() == 313 and (in_array($enchantment->getId(), $IncompatibleGrappling)))) {
+                                        $player->removeWindow($action->getInventory());
+                                        $player->getInventory()->addItem($item1);
+                                        $player->getInventory()->addItem($item2);
+                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                    } elseif ($enchantment->getId() == 415 and (in_array($enchantment1->getId(), $IncompatibleGrow)) or ($enchantment1->getId() == 415 and (in_array($enchantment->getId(), $IncompatibleGrow)))) {
+                                        $player->removeWindow($action->getInventory());
+                                        $player->getInventory()->addItem($item1);
+                                        $player->getInventory()->addItem($item2);
+                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                    } elseif ($enchantment->getId() == 316 and (in_array($enchantment1->getId(), $IncompatibleHoming)) or ($enchantment1->getId() == 316 and (in_array($enchantment->getId(), $IncompatibleHoming)))) {
+                                        $player->removeWindow($action->getInventory());
+                                        $player->getInventory()->addItem($item1);
+                                        $player->getInventory()->addItem($item2);
+                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                    } elseif ($enchantment->getId() == 314 and (in_array($enchantment1->getId(), $IncompatiblePorkified)) or ($enchantment1->getId() == 314 and (in_array($enchantment->getId(), $IncompatiblePorkified)))) {
+                                        $player->removeWindow($action->getInventory());
+                                        $player->getInventory()->addItem($item1);
+                                        $player->getInventory()->addItem($item2);
+                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                    }
+                                }
+                            }
                             if ($this->EconomyAPEEE()->myMoney($player) >= $this->getConfig()->get("Cost")) {
                             if ($action->getInventory()->getItem(10)->isNull() == false) {
                                 if ($action->getInventory()->getItem(16)->isNull() == false) {
                                     if ($item1->hasEnchantments() and $item2->hasEnchantments()) {
                                         if ($item1->getId() == $item2->getId()) {
-                                            $getEnchantments = $action->getInventory()->getItem(10)->getEnchantments();
-                                        $getEnchantments1 = $action->getInventory()->getItem(16)->getEnchantments();
-                                        $player->getLevel()->broadcastLevelEvent($player, LevelEventPacket::EVENT_CAULDRON_CLEAN_BANNER, 100);
-                                        foreach ($getEnchantments as $enchantment) {
-                                            foreach ($getEnchantments1 as $enchantment1) {
-                                                if ($enchantment->getId() == 311 and(!(in_array($enchantment1->getId(), $IncompatibleBlaze))) or $enchantment1->getId() == 311 and (!(in_array($enchantment->getId(), $IncompatibleBlaze)))) {
-                                                    if ($enchantment->getId() == 313 and(!(in_array($enchantment1->getId(), $IncompatibleGrappling))) or $enchantment1->getId() == 313 and (!(in_array($enchantment->getId(), $IncompatibleGrappling)))) {
-                                                        if ($enchantment->getId() == 415 and (!(in_array($enchantment1->getId(), $IncompatibleGrow))) or $enchantment1->getId() == 415 and (!(in_array($enchantment->getId(), $IncompatibleGrow)))) {
-                                                            if ($enchantment->getId() == 316 and (!(in_array($enchantment1->getId(), $IncompatibleHoming))) or $enchantment1->getId() == 316 and (!(in_array($enchantment->getId(), $IncompatibleHoming)))) {
-                                                                if ($enchantment->getId() == 314 and (!(in_array($enchantment1->getId(), $IncompatiblePorkified))) or $enchantment1->getId() == 314 and (!(in_array($enchantment->getId(), $IncompatiblePorkified)))) {
-                                                                    $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment->getId()), $enchantment->getLevel()));
-                                                                    $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment1->getId()), $enchantment1->getLevel()));
-                                                                    foreach ($item1->getEnchantments() as $b) {
-                                                                        foreach ($item2->getEnchantments() as $c) {
-                                                                            if ($b->getId() == $c->getId()) {
-                                                                                $level1 = $b->getLevel();
-                                                                                $level2 = $c->getLevel();
-                                                                                $level = $level1 + $level2;
-                                                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $level));
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                    EconomyAPI::getInstance()->reduceMoney($player, $this->getConfig()->get("Cost"));
-                                                                    $player->removeWindow($action->getInventory());
-                                                                    $player->getInventory()->addItem($item);
-                                                                    $player->sendMessage(TextFormat::GREEN . "Hai combinato correttamente gli enchant per" . $this->getConfig()->get("Cost"));
-                                                                }else{
-                                                                    $player->removeWindow($action->getInventory());
-                                                                    $player->getInventory()->addItem($item1);
-                                                                    $player->getInventory()->addItem($item2);
-                                                                    $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
-                                                                }
-                                                            }else{
-                                                                $player->removeWindow($action->getInventory());
-                                                                $player->getInventory()->addItem($item1);
-                                                                $player->getInventory()->addItem($item2);
-                                                                $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
-                                                            }
-                                                        }else{
+                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment->getId()), $enchantment->getLevel()));
+                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment1->getId()), $enchantment1->getLevel()));
+                                                foreach ($item1->getEnchantments() as $b) {
+                                                    foreach ($item2->getEnchantments() as $c) {
+                                                        if ($b->getId() == $c->getId()) {
+                                                            $level1 = $b->getLevel();
+                                                            $level2 = $c->getLevel();
+                                                            $level = $level1 + $level2;
+                                                            $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $level));
+                                                            $this->EconomyAPEEE()->reduceMoney($player, $this->getConfig()->get("Cost"));
                                                             $player->removeWindow($action->getInventory());
-                                                            $player->getInventory()->addItem($item1);
-                                                            $player->getInventory()->addItem($item2);
-                                                            $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                            $player->getInventory()->addItem($item);
+                                                            $player->sendMessage(TextFormat::GREEN . "Hai combinato correttamente gli enchant per" . " " . $this->getConfig()->get("Cost") . " " . "monete");
                                                         }
-                                                    }else{
-                                                        $player->removeWindow($action->getInventory());
-                                                        $player->getInventory()->addItem($item1);
-                                                        $player->getInventory()->addItem($item2);
-                                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
                                                     }
-
-                                                }else{
-                                                    $player->removeWindow($action->getInventory());
-                                                    $player->getInventory()->addItem($item1);
-                                                    $player->getInventory()->addItem($item2);
-                                                    $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
                                                 }
-                                            }
 
-                                        }
-
-                                    }else{
+                                             }else{
                                             $player->removeWindow($action->getInventory());
                                             $player->sendMessage(TextFormat::RED . "Entrambi gli item devono essere uguali");
                                             $player->getInventory()->addItem($item1);
                                             $player->getInventory()->addItem($item2);
                                         }
+
 
                                     } else {
                                         $player->removeWindow($action->getInventory());
@@ -168,13 +152,16 @@ class Main extends PluginBase implements Listener {
                                     $player->getInventory()->addItem($item1);
                                     $player->getInventory()->addItem($item2);
                                 }
+
                             } else {
                                 $player->removeWindow($action->getInventory());
                                 $player->sendMessage(TextFormat::RED . "Devi inserire due items");
                                 $player->getInventory()->addItem($item1);
                                 $player->getInventory()->addItem($item2);
                             }
-                        }elseif($this->EconomyAPEEE()->myMoney($player) < $this->getConfig()->get("Cost")){
+
+
+                            }elseif($this->EconomyAPEEE()->myMoney($player) < $this->getConfig()->get("Cost")){
                                 $player->removeWindow($action->getInventory());
                                 $player->getInventory()->addItem($item1);
                                 $player->getInventory()->addItem($item2);
@@ -182,26 +169,31 @@ class Main extends PluginBase implements Listener {
 
                             }
 
-
                     }
+
                         if(in_array($action->getSlot(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25])) {
                             $player->removeWindow($action->getInventory());
                             $player->getInventory()->addItem($item1);
                             $player->getInventory()->addItem($item2);
                         }
+
                         if (in_array($action->getSlot(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26])) {
                             return false;
                         } else {
                             return true;
                         }
+
                     });
+
                 }
+
                 return true;
+
         }
 
 
     }
-    
+
     /**
      * @return EconomyAPI
      */
