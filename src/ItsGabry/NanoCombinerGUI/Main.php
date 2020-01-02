@@ -1,6 +1,9 @@
 <?php
 
 
+<?php
+
+
 namespace ItsGabry\NanoCombinerGUI;
 
 use onebone\economyapi\EconomyAPI;
@@ -118,8 +121,12 @@ class Main extends PluginBase implements Listener {
                                    if ($item2->isNull() === false) {
                                       if ($item1->hasEnchantments() and $item2->hasEnchantments()) {
                                         if ($item1->getId() === $item2->getId()) {
-                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment->getId()), $enchantment->getLevel()));
-                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment1->getId()), $enchantment1->getLevel()));
+                                            foreach ($getEnchantments as $enchantment) {
+                                                foreach ($getEnchantments1 as $enchantment1) {
+                                                    $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment->getId()), $enchantment->getLevel()));
+                                                    $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment1->getId()), $enchantment1->getLevel()));
+                                                }
+                                            }
                                                 foreach ($item1->getEnchantments() as $b) {
                                                     foreach ($item2->getEnchantments() as $c) {
                                                         if ($b->getId() === $c->getId()) {
@@ -217,5 +224,4 @@ class Main extends PluginBase implements Listener {
 
 
 }
-
 
