@@ -126,7 +126,15 @@ class Main extends PluginBase implements Listener {
                                                             $level1 = $b->getLevel();
                                                             $level2 = $c->getLevel();
                                                             $level = $level1 + $level2;
-                                                            $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $level));
+                                                            if($level <= $c->getType()->getMaxLevel()) {
+                                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $level));
+                                                            }elseif($level > $c->getType()->getMaxLevel()) {
+                                                                $player->sendMessage(TextFormat::RED . "Livello massimo raggiunto!");
+                                                                $player->removeWindow($action->getInventory());
+                                                                $player->getInventory()->addItem($item1);
+                                                                $player->getInventory()->addItem($item2);
+                                                                return false;
+                                                            }
                                                         }
                                                     }
                                                 }
