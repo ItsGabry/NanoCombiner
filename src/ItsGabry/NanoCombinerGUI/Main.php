@@ -83,8 +83,8 @@ class Main extends PluginBase implements Listener {
                                    if ($item2->isNull() === false) {
                                       if ($item1->hasEnchantments() and $item2->hasEnchantments()) {
                                         if ($item1->getId() === $item2->getId()) {
-                                            foreach ($getEnchantments as $enchantment) {
-                                                foreach ($getEnchantments1 as $enchantment1) {
+                                                foreach ($getEnchantments as $enchantment) {
+                                                   foreach ($getEnchantments1 as $enchantment1) {
                                                     $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment->getId()), $enchantment->getLevel()));
                                                     $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment1->getId()), $enchantment1->getLevel()));
                                                     if ($enchantment->getId() === 311 and (in_array($enchantment1->getId(), $IncompatibleBlaze)) or ($enchantment1->getId() === 311 and (in_array($enchantment->getId(), $IncompatibleBlaze)))) {
@@ -129,11 +129,7 @@ class Main extends PluginBase implements Listener {
                                                             if($level <= $c->getType()->getMaxLevel()) {
                                                                 $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $level));
                                                             }elseif($level > $c->getType()->getMaxLevel()) {
-                                                                $player->sendMessage(TextFormat::RED . "Livello massimo raggiunto!");
-                                                                $player->removeWindow($action->getInventory());
-                                                                $player->getInventory()->addItem($item1);
-                                                                $player->getInventory()->addItem($item2);
-                                                                return false;
+                                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $c->getType()->getMaxLevel()));
                                                             }
                                                         }
                                                     }
@@ -217,5 +213,7 @@ class Main extends PluginBase implements Listener {
 
 
 }
+
+
 
 
