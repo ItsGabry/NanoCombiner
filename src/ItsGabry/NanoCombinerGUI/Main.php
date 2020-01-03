@@ -78,41 +78,6 @@ class Main extends PluginBase implements Listener {
                             $getEnchantments = $item1->getEnchantments();
                             $getEnchantments1 = $item2->getEnchantments();
                             $player->getLevel()->broadcastLevelEvent($player, LevelEventPacket::EVENT_CAULDRON_CLEAN_BANNER, 100);
-                            foreach ($getEnchantments as $enchantment) {
-                                foreach ($getEnchantments1 as $enchantment1) {
-                                    if ($enchantment->getId() === 311 and (in_array($enchantment1->getId(), $IncompatibleBlaze)) or ($enchantment1->getId() === 311 and (in_array($enchantment->getId(), $IncompatibleBlaze)))) {
-                                        $player->removeWindow($action->getInventory());
-                                        $player->getInventory()->addItem($item1);
-                                        $player->getInventory()->addItem($item2);
-                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
-                                        return false;
-                                    } elseif ($enchantment->getId() === 313 and (in_array($enchantment1->getId(), $IncompatibleGrappling)) or ($enchantment1->getId() === 313 and (in_array($enchantment->getId(), $IncompatibleGrappling)))) {
-                                        $player->removeWindow($action->getInventory());
-                                        $player->getInventory()->addItem($item1);
-                                        $player->getInventory()->addItem($item2);
-                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
-                                        return false;
-                                    } elseif ($enchantment->getId() === 415 and (in_array($enchantment1->getId(), $IncompatibleGrow)) or ($enchantment1->getId() === 415 and (in_array($enchantment->getId(), $IncompatibleGrow)))) {
-                                        $player->removeWindow($action->getInventory());
-                                        $player->getInventory()->addItem($item1);
-                                        $player->getInventory()->addItem($item2);
-                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
-                                        return false;
-                                    } elseif ($enchantment->getId() === 316 and (in_array($enchantment1->getId(), $IncompatibleHoming)) or ($enchantment1->getId() === 316 and (in_array($enchantment->getId(), $IncompatibleHoming)))) {
-                                        $player->removeWindow($action->getInventory());
-                                        $player->getInventory()->addItem($item1);
-                                        $player->getInventory()->addItem($item2);
-                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
-                                        return false;
-                                    } elseif ($enchantment->getId() === 314 and (in_array($enchantment1->getId(), $IncompatiblePorkified)) or ($enchantment1->getId() === 314 and (in_array($enchantment->getId(), $IncompatiblePorkified)))) {
-                                        $player->removeWindow($action->getInventory());
-                                        $player->getInventory()->addItem($item1);
-                                        $player->getInventory()->addItem($item2);
-                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
-                                        return false;
-                                    }
-                                }
-                            }
                              if ($this->EconomyAPEEE()->myMoney($player) >= $this->getConfig()->get("Cost")) {
                                 if ($item1->isNull() === false) {
                                    if ($item2->isNull() === false) {
@@ -122,9 +87,40 @@ class Main extends PluginBase implements Listener {
                                                 foreach ($getEnchantments1 as $enchantment1) {
                                                     $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment->getId()), $enchantment->getLevel()));
                                                     $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($enchantment1->getId()), $enchantment1->getLevel()));
+                                                    if ($enchantment->getId() === 311 and (in_array($enchantment1->getId(), $IncompatibleBlaze)) or ($enchantment1->getId() === 311 and (in_array($enchantment->getId(), $IncompatibleBlaze)))) {
+                                                        $player->removeWindow($action->getInventory());
+                                                        $player->getInventory()->addItem($item1);
+                                                        $player->getInventory()->addItem($item2);
+                                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                        return false;
+                                                    } elseif ($enchantment->getId() === 313 and (in_array($enchantment1->getId(), $IncompatibleGrappling)) or ($enchantment1->getId() === 313 and (in_array($enchantment->getId(), $IncompatibleGrappling)))) {
+                                                        $player->removeWindow($action->getInventory());
+                                                        $player->getInventory()->addItem($item1);
+                                                        $player->getInventory()->addItem($item2);
+                                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                        return false;
+                                                    } elseif ($enchantment->getId() === 415 and (in_array($enchantment1->getId(), $IncompatibleGrow)) or ($enchantment1->getId() === 415 and (in_array($enchantment->getId(), $IncompatibleGrow)))) {
+                                                        $player->removeWindow($action->getInventory());
+                                                        $player->getInventory()->addItem($item1);
+                                                        $player->getInventory()->addItem($item2);
+                                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                        return false;
+                                                    } elseif ($enchantment->getId() === 316 and (in_array($enchantment1->getId(), $IncompatibleHoming)) or ($enchantment1->getId() === 316 and (in_array($enchantment->getId(), $IncompatibleHoming)))) {
+                                                        $player->removeWindow($action->getInventory());
+                                                        $player->getInventory()->addItem($item1);
+                                                        $player->getInventory()->addItem($item2);
+                                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                        return false;
+                                                    } elseif ($enchantment->getId() === 314 and (in_array($enchantment1->getId(), $IncompatiblePorkified)) or ($enchantment1->getId() === 314 and (in_array($enchantment->getId(), $IncompatiblePorkified)))) {
+                                                        $player->removeWindow($action->getInventory());
+                                                        $player->getInventory()->addItem($item1);
+                                                        $player->getInventory()->addItem($item2);
+                                                        $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                        return false;
+                                                    }
                                                 }
                                             }
-                                                foreach ($item1->getEnchantments() as $b) {
+                                                 foreach ($item1->getEnchantments() as $b) {
                                                     foreach ($item2->getEnchantments() as $c) {
                                                         if ($b->getId() === $c->getId()) {
                                                             $level1 = $b->getLevel();
@@ -221,4 +217,5 @@ class Main extends PluginBase implements Listener {
 
 
 }
+
 
