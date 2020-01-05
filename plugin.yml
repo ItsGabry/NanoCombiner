@@ -10,7 +10,10 @@ commands:
     usage: "/combiner"
     aliases: [comb, combin]
     permission: combiner.command
-  permissions:
-    combiner.command:
-    description: "Allows players to use the CombinerGUI"
-    default: true
+
+permissions:
+  combiner:
+    children:
+      combiner.command:
+        description: "Allows players to use the CombinerGUI"
+        default: true
