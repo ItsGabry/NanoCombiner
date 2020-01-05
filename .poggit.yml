@@ -7,8 +7,7 @@ projects:
     libs: 
     - src: muqsit/InvMenu/InvMenu
       version: ^2.1.0
-    icon:
-    "icon.png"
+    icon: "icon.png"
       
       
       
