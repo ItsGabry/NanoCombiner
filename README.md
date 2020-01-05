@@ -9,6 +9,3 @@ Features:
 - Special menu
 - CostumEnchant (Piggy CustomEnchant) supported
 - EconomyAPI supported
-
-
-
