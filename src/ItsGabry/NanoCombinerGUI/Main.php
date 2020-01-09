@@ -74,6 +74,7 @@ class Main extends PluginBase implements Listener {
                         $IncompatibleGrow = [414]; //415
                         $IncompatibleHoming = [311,314,301]; //316
                         $IncompatiblePorkified = [301]; //314
+                        $IncompatibleFortune = [16]; //18
                         if ($action->getSlot() == 26) {
                             $getEnchantments = $item1->getEnchantments();
                             $getEnchantments1 = $item2->getEnchantments();
@@ -117,6 +118,12 @@ class Main extends PluginBase implements Listener {
                                                         $player->getInventory()->addItem($item2);
                                                         $player->sendMessage(TextFormat::RED . "Incompatible enchantments");
                                                         return false;
+                                                    }elseif ($enchantment->getId() === 18 and (in_array($enchantment1->getId(), $IncompatibleFortune)) or ($enchantment1->getId() === 18 and (in_array($enchantment->getId(), $IncompatibleFortune)))) {
+                                                            $player->removeWindow($action->getInventory());
+                                                            $player->getInventory()->addItem($item1);
+                                                            $player->getInventory()->addItem($item2);
+                                                            $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                            return false;
                                                     }
                                                 }
                                             }
