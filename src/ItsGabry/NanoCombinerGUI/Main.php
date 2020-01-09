@@ -122,7 +122,7 @@ class Main extends PluginBase implements Listener {
                                                             $player->removeWindow($action->getInventory());
                                                             $player->getInventory()->addItem($item1);
                                                             $player->getInventory()->addItem($item2);
-                                                            $player->sendMessage(TextFormat::RED . "Enchant incompatibili");
+                                                            $player->sendMessage(TextFormat::RED . "Incompatible enchantments");
                                                             return false;
                                                     }
                                                 }
