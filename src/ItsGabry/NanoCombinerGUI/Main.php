@@ -37,8 +37,13 @@ class Main extends PluginBase implements Listener {
                     $menu = InvMenu::create(InvMenu::TYPE_CHEST);
                     $menu->setInventoryCloseListener(function(Player $player, Inventory $inventory) {
                         if($inventory->getItem(10)->isNull() xor $inventory->getItem(16)->isNull()) {
-                                 $player->getInventory()->addItem($inventory->getItem(10));
-                                 $player->getInventory()->addItem($inventory->getItem(16));
+                                $player->getInventory()->addItem($inventory->getItem(10));
+                                $player->getInventory()->addItem($inventory->getItem(16));
+                        }elseif(!($inventory->getItem(10)->isNull() and $inventory->getItem(16)->isNull())) {
+                            if($this->EconomyAPEEE()->myMoney($player) < $this->getConfig()->get("Cost")) {
+                                $player->getInventory()->addItem($inventory->getItem(10));
+                                $player->getInventory()->addItem($inventory->getItem(16));
+                            }
                         }
                     });
                     $menu->getInventory()->setContents([
@@ -105,19 +110,19 @@ class Main extends PluginBase implements Listener {
                                                             $player->removeWindow($action->getInventory());
                                                             $player->sendMessage(TextFormat::RED . "Incompatible enchantments");
                                                             return false;
-                                                        } elseif ($enchantment->getId() === 313 and (in_array($enchantment1->getId(), $IncompatibleGrappling)) or ($enchantment1->getId() === 313 and (in_array($enchantment->getId(), $IncompatibleGrappling)))) {
+                                                        }elseif ($enchantment->getId() === 313 and (in_array($enchantment1->getId(), $IncompatibleGrappling)) or ($enchantment1->getId() === 313 and (in_array($enchantment->getId(), $IncompatibleGrappling)))) {
                                                             $player->removeWindow($action->getInventory());
                                                             $player->sendMessage(TextFormat::RED . "Incompatible enchantments");
                                                             return false;
-                                                        } elseif ($enchantment->getId() === 415 and (in_array($enchantment1->getId(), $IncompatibleGrow)) or ($enchantment1->getId() === 415 and (in_array($enchantment->getId(), $IncompatibleGrow)))) {
+                                                        }elseif ($enchantment->getId() === 415 and (in_array($enchantment1->getId(), $IncompatibleGrow)) or ($enchantment1->getId() === 415 and (in_array($enchantment->getId(), $IncompatibleGrow)))) {
                                                             $player->removeWindow($action->getInventory());
                                                             $player->sendMessage(TextFormat::RED . "Incompatible enchantments");
                                                             return false;
-                                                        } elseif ($enchantment->getId() === 316 and (in_array($enchantment1->getId(), $IncompatibleHoming)) or ($enchantment1->getId() === 316 and (in_array($enchantment->getId(), $IncompatibleHoming)))) {
+                                                        }elseif ($enchantment->getId() === 316 and (in_array($enchantment1->getId(), $IncompatibleHoming)) or ($enchantment1->getId() === 316 and (in_array($enchantment->getId(), $IncompatibleHoming)))) {
                                                             $player->removeWindow($action->getInventory());
                                                             $player->sendMessage(TextFormat::RED . "Incompatible enchantments");
                                                             return false;
-                                                        } elseif ($enchantment->getId() === 314 and (in_array($enchantment1->getId(), $IncompatiblePorkified)) or ($enchantment1->getId() === 314 and (in_array($enchantment->getId(), $IncompatiblePorkified)))) {
+                                                        }elseif ($enchantment->getId() === 314 and (in_array($enchantment1->getId(), $IncompatiblePorkified)) or ($enchantment1->getId() === 314 and (in_array($enchantment->getId(), $IncompatiblePorkified)))) {
                                                             $player->removeWindow($action->getInventory());
                                                             $player->sendMessage(TextFormat::RED . "Incompatible enchantments");
                                                             return false;
@@ -136,8 +141,9 @@ class Main extends PluginBase implements Listener {
                                                             $level = $level1 + $level2;
                                                             if($level <= $c->getType()->getMaxLevel()) {
                                                                 $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $level));
-                                                            }elseif($level > $c->getType()->getMaxLevel()) {
-                                                                $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $c->getType()->getMaxLevel()));
+                                                            }elseif($level > $c->getType()->getMaxLevel()){
+                                                                    $item->addEnchantment(new EnchantmentInstance(Enchantment::getEnchantment($c->getId()), $c->getType()->getMaxLevel()));
+                                                                    $player->sendMessage(TextFormat::RED . "You have reached the maximum level. The enchant has been set to the maximum possible level");
                                                             }
                                                         }
                                                     }
@@ -185,8 +191,7 @@ class Main extends PluginBase implements Listener {
 
                         if (in_array($action->getSlot(), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26])) {
                             return false;
-                        }
-                        else {
+                        }else{
                             return true;
                         }
                     });
